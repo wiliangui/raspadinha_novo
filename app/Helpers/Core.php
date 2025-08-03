@@ -914,17 +914,18 @@ private static function PayWin($user, $affiliate, $type, $amount, $changeBonus)
      * Get Settings
      * @return \Illuminate\Cache\
      */
-    public static function getCustom()
+   public static function getCustom()
     {
         $custom = null;
-        if(Cache::has('custom')) {
+
+        if (Cache::has('custom')) {
             $custom = Cache::get('custom');
-        }else{
+        } else {
             $custom = CustomLayout::first();
             Cache::put('custom', $custom);
         }
 
-        return $custom;
+        return $custom ? $custom->toArray() : [];
     }
 
     /**
