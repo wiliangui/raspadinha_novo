@@ -29,6 +29,8 @@ RUN a2enmod rewrite
 WORKDIR /var/www/html
 
 # Copia os arquivos do seu projeto para dentro do container
+# Copia o novo script de entrypoint primeiro
+COPY entrypoint.sh .
 COPY . .
 
 # Instala as dependências do Laravel (sem as de desenvolvimento)
@@ -37,3 +39,10 @@ RUN composer install --no-interaction --optimize-autoloader --no-dev
 # Ajusta as permissões das pastas do Laravel
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
+
+# ----- NOVAS LINHAS AQUI -----
+# Torna o nosso script executável
+RUN chmod +x entrypoint.sh
+
+# Define o nosso script como o comando de inicialização do container
+ENTRYPOINT ["/var/www/html/entrypoint.sh"]
