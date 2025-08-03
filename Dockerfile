@@ -17,10 +17,16 @@ RUN apt-get update && apt-get install -y \
     curl \
     && docker-php-ext-install pdo pdo_pgsql mbstring exif pcntl bcmath gd zip intl simplexml curl soap
 
-# Instala o Composer (gerenciador de pacotes do PHP)
+# Instala o Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Define o diretório de trabalho do container
+# ----- CONFIGURAÇÃO CORRETA DO APACHE -----
+# Define a pasta pública do Laravel e ativa o mod_rewrite
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN a2enmod rewrite
+
+# Define o diretório de trabalho
 WORKDIR /var/www/html
 
 # Copia os arquivos do projeto
@@ -29,12 +35,9 @@ COPY . .
 # Instala as dependências do Laravel
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# ---- AJUSTE DE PERMISSÕES MELHORADO ----
-# Garante que o dono de todos os arquivos seja o usuário do servidor web
+# ---- PERMISSÕES CORRIGIDAS ----
 RUN chown -R www-data:www-data /var/www/html
-# Cria o arquivo de log para garantir que ele exista
 RUN touch /var/www/html/storage/logs/laravel.log
-# Define as permissões corretas para as pastas e o arquivo de log
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod 664 /var/www/html/storage/logs/laravel.log
 
