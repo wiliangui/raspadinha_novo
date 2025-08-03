@@ -20,29 +20,27 @@ RUN apt-get update && apt-get install -y \
 # Instala o Composer (gerenciador de pacotes do PHP)
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Configura o Apache para usar a pasta /public do Laravel
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN a2enmod rewrite
-
 # Define o diretório de trabalho do container
 WORKDIR /var/www/html
 
-# Copia os arquivos do seu projeto para dentro do container
-# Copia o novo script de entrypoint primeiro
-COPY entrypoint.sh .
+# Copia os arquivos do projeto
 COPY . .
 
-# Instala as dependências do Laravel (sem as de desenvolvimento)
+# Instala as dependências do Laravel
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-# Ajusta as permissões das pastas do Laravel
-RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# ---- AJUSTE DE PERMISSÕES MELHORADO ----
+# Garante que o dono de todos os arquivos seja o usuário do servidor web
+RUN chown -R www-data:www-data /var/www/html
+# Cria o arquivo de log para garantir que ele exista
+RUN touch /var/www/html/storage/logs/laravel.log
+# Define as permissões corretas para as pastas e o arquivo de log
+RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chmod 664 /var/www/html/storage/logs/laravel.log
 
-# ----- NOVAS LINHAS AQUI -----
-# Torna o nosso script executável
+# Copia e torna o script de inicialização executável
+COPY entrypoint.sh .
 RUN chmod +x entrypoint.sh
 
-# Define o nosso script como o comando de inicialização do container
+# Define o nosso script como o comando de inicialização
 ENTRYPOINT ["/var/www/html/entrypoint.sh"]
