@@ -3,6 +3,7 @@ FROM php:8.2-apache
 
 # Instala dependências do sistema e extensões PHP que o Laravel precisa
 RUN apt-get update && apt-get install -y \
+    libpq-dev \
     libzip-dev \
     libpng-dev \
     libjpeg-dev \
