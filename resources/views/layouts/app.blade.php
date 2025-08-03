@@ -22,25 +22,25 @@
                 font-family: {{ $custom['font_family_default'] ?? "'Roboto Condensed', sans-serif" }};
             }
             :root {
-                --ci-primary-color: {{ $custom['primary_color'] }};
-                --ci-primary-opacity-color: {{ $custom['primary_opacity_color'] }};
-                --ci-secundary-color: {{ $custom['secundary_color'] }};
-                --ci-gray-dark: {{ $custom['gray_dark_color'] }};
-                --ci-gray-light: {{ $custom['gray_light_color'] }};
-                --ci-gray-medium: {{ $custom['gray_medium_color'] }};
-                --ci-gray-over: {{ $custom['gray_over_color'] }};
-                --title-color: {{ $custom['title_color'] }};
-                --text-color: {{ $custom['text_color'] }};
-                --sub-text-color: {{ $custom['sub_text_color'] }};
-                --placeholder-color: {{ $custom['placeholder_color'] }};
-                --background-color: {{ $custom['background_color'] }};
+                --ci-primary-color: {{ $custom['primary_color'] ?? '#ff0000' }};
+                --ci-primary-opacity-color: {{ $custom['primary_opacity_color'] ?? '#ffff0099' }};
+                --ci-secundary-color: {{ $custom['secundary_color'] ?? '#AAffA099' }};
+                --ci-gray-dark: {{ $custom['gray_dark_color'] ?? '#444444'}};
+                --ci-gray-light: {{ $custom['gray_light_color'] ?? '#FFFF44'}};
+                --ci-gray-medium: {{ $custom['gray_medium_color'] ?? '#AABBF4'}};
+                --ci-gray-over: {{ $custom['gray_over_color'] ?? '#FBCCFF'}};
+                --title-color: {{ $custom['title_color'] ?? '#4444FF'}};
+                --text-color: {{ $custom['text_color']?? '#44FF44' }};
+                --sub-text-color: {{ $custom['sub_text_color'] ?? '#00FEEE'}};
+                --placeholder-color: {{ $custom['placeholder_color'] ?? '#EA0AA0'}};
+                --background-color: {{ $custom['background_color'] ?? '#DDBB85'}};
                 --standard-color: #1C1E22;
                 --shadow-color: #111415;
                 --page-shadow: linear-gradient(to right, #111415, rgba(17, 20, 21, 0));
                 --autofill-color: #f5f6f7;
                 --yellow-color: #FFBF39;
                 --yellow-dark-color: #d7a026;
-                --border-radius: {{ $custom['border_radius'] }};
+                --border-radius: {{ $custom['border_radius'] ?? '20%'}};
                 --tw-border-spacing-x: 0;
                 --tw-border-spacing-y: 0;
                 --tw-translate-x: 0;
@@ -59,18 +59,18 @@
                 --tw-shadow: 0 0 #0000;
                 --tw-shadow-colored: 0 0 #0000;
 
-                --input-primary: {{ $custom['input_primary'] }};
-                --input-primary-dark: {{ $custom['input_primary_dark'] }};
+                --input-primary: {{ $custom['input_primary'] ?? '#444444'}};
+                --input-primary-dark: {{ $custom['input_primary_dark'] ?? '#444444'}};
 
-                --carousel-banners: {{ $custom['carousel_banners'] }};
-                --carousel-banners-dark: {{ $custom['carousel_banners_dark'] }};
-
-
-                --sidebar-color: {{ $custom['sidebar_color'] }} !important;
-                --sidebar-color-dark: {{ $custom['sidebar_color_dark'] }} !important;
+                --carousel-banners: {{ $custom['carousel_banners'] ?? '#444444'}};
+                --carousel-banners-dark: {{ $custom['carousel_banners_dark'] ?? '#444444'}};
 
 
-                --navtop-color {{ $custom['navtop_color'] }};
+                --sidebar-color: {{ $custom['sidebar_color'] ?? '#444444'}} !important;
+                --sidebar-color-dark: {{ $custom['sidebar_color_dark'] ?? '#CCCCCC'}} !important;
+
+
+                --navtop-color {{ $custom['navtop_color'] ?? '#CCCBB4'}};
                 --navtop-color-dark: {{ $custom['navtop_color_dark'] }};
 
 
