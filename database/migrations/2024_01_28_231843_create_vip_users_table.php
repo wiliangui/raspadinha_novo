@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('vip_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('vip_id')->unsigned()->index();
-            $table->foreign('vip_id')->references('id')->on('´vips')->onDelete('cascade');
+            $table->unsignedBigInteger('vip_id')->index();
+            $table->foreign('vip_id')->references('id')->on('vips')->onDelete('cascade');
             $table->bigInteger('level');
             $table->bigInteger('points');
             $table->tinyInteger('status')->default(0);

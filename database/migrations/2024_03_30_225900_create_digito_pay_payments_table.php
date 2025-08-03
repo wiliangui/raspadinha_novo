@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('digito_pay_payments', function (Blueprint $table) {
             $table->id();
             $table->string('payment_id')->nullable();
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('withdrawal_id')->unsigned()->index();
+            $table->unsignedBigInteger('withdrawal_id')->index();
             $table->foreign('withdrawal_id')->references('id')->on('withdrawals')->onDelete('cascade');
             $table->string('pix_key');
             $table->string('pix_type');

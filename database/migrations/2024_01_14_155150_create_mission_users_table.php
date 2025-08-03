@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('mission_users', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('mission_id')->unsigned()->index();
+            $table->unsignedBigInteger('mission_id')->index();
             $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
             $table->bigInteger('rounds')->default(0);
             $table->decimal('rewards', 10, 2)->default(0);

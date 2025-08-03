@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('affiliate_histories', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id')->unsigned()->index();
+            $table->unsignedBigInteger('user_id')->index();
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->integer('inviter')->unsigned()->index();
+            $table->unsignedBigInteger('inviter')->nullable()->index();
             $table->foreign('inviter')->references('id')->on('users')->onDelete('cascade');
             $table->decimal('commission', 20, 2)->default(0);
             $table->string('commission_type')->nullable();
